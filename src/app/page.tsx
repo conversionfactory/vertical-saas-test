@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-warm-50 text-warm-900">
@@ -22,7 +24,7 @@ export default function Home() {
 function Nav() {
   return (
     <header className="sticky top-0 z-50 bg-warm-50/90 backdrop-blur-sm border-b border-warm-200">
-      <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <a href="/" className="font-display text-xl font-bold text-warm-900">
           Clean<span className="text-brand-500">Pet</span>List
         </a>
@@ -44,42 +46,58 @@ function Nav() {
 /* ── HERO ── */
 function Hero() {
   return (
-    <section id="join" className="bg-white border-b border-warm-200">
-      <div className="max-w-3xl mx-auto px-6 py-24 text-center">
-        <span className="inline-block px-3 py-1 text-xs font-semibold tracking-widest uppercase bg-brand-50 text-brand-600 rounded-full border border-brand-200 mb-6">
-          Free Weekly Newsletter
-        </span>
-        <h1 className="font-display text-5xl sm:text-6xl font-bold text-warm-900 leading-tight mb-6">
-          Everything your pet needs.{" "}
-          <span className="text-brand-500">Nothing they shouldn&apos;t have.</span>
-        </h1>
-        <p className="text-lg sm:text-xl text-warm-600 leading-relaxed mb-10 max-w-2xl mx-auto">
-          Every week, we find and vet the best organic, natural, and toxin-free
-          pet products — food, treats, toys, supplements, and more — and send
-          them straight to your inbox.
-        </p>
+    <section id="join" className="bg-white border-b border-warm-200 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center py-20 lg:py-24">
 
-        {/* Email Form */}
-        <form className="max-w-md mx-auto space-y-3">
-          <div className="flex gap-2">
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter your email address"
-              required
-              className="flex-1 min-w-0 px-4 py-3 text-base border border-warm-300 rounded-lg bg-white text-warm-900 placeholder-warm-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition"
-            />
-            <button
-              type="submit"
-              className="shrink-0 px-5 py-3 text-base font-semibold bg-brand-500 text-white rounded-lg hover:bg-brand-600 transition-colors"
-            >
-              Join Free
-            </button>
+          {/* Content */}
+          <div>
+            <span className="inline-block px-3 py-1 text-xs font-semibold tracking-widest uppercase bg-brand-50 text-brand-600 rounded-full border border-brand-200 mb-6">
+              Free Weekly Newsletter
+            </span>
+            <h1 className="font-display text-5xl sm:text-6xl font-bold text-warm-900 leading-tight mb-6">
+              Everything your pet needs.{" "}
+              <span className="text-brand-500">Nothing they shouldn&apos;t have.</span>
+            </h1>
+            <p className="text-lg text-warm-600 leading-relaxed mb-10">
+              Every week, we find and vet the best organic, natural, and
+              toxin-free pet products — food, treats, toys, supplements, and
+              more — and send them straight to your inbox.
+            </p>
+            <form className="space-y-3">
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email address"
+                  required
+                  className="flex-1 min-w-0 px-4 py-3 text-base border border-warm-300 rounded-lg bg-white text-warm-900 placeholder-warm-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition"
+                />
+                <button
+                  type="submit"
+                  className="shrink-0 px-5 py-3 text-base font-semibold bg-brand-500 text-white rounded-lg hover:bg-brand-600 transition-colors"
+                >
+                  Join Free
+                </button>
+              </div>
+              <p className="text-sm text-warm-400">
+                No spam. No greenwashing. Just clean picks, weekly.
+              </p>
+            </form>
           </div>
-          <p className="text-sm text-warm-400">
-            No spam. No greenwashing. Just clean picks, weekly.
-          </p>
-        </form>
+
+          {/* Hero Image */}
+          <div className="relative hidden lg:block h-[580px] rounded-3xl overflow-hidden">
+            <Image
+              src="https://images.unsplash.com/photo-1594149929911-78975a43d4f5?w=1200&q=80"
+              alt="Happy golden retriever puppy on grass"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+
+        </div>
       </div>
     </section>
   );
@@ -94,7 +112,7 @@ function MissionBar() {
   ];
   return (
     <section className="bg-brand-500">
-      <div className="max-w-5xl mx-auto px-6 py-4">
+      <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-0 sm:divide-x sm:divide-brand-400">
           {items.map((item, i) => (
             <p key={i} className="text-sm font-medium text-white/90 sm:px-8 text-center">
@@ -137,6 +155,17 @@ function Problem() {
             CleanPetList to make it easier.
           </p>
         </div>
+
+        {/* Lifestyle image */}
+        <div className="mt-12 rounded-3xl overflow-hidden">
+          <Image
+            src="https://images.unsplash.com/photo-1522276498395-f4f68f7f8454?w=1200&q=80"
+            alt="Pet owner hugging their happy dog"
+            width={1200}
+            height={500}
+            className="w-full h-64 sm:h-80 object-cover"
+          />
+        </div>
       </div>
     </section>
   );
@@ -164,7 +193,7 @@ function WhatYouGet() {
 
   return (
     <section className="bg-white border-y border-warm-200 py-24">
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-14">
           <span className="inline-block text-xs font-semibold tracking-widest uppercase text-brand-500 mb-4">
             What You Get
@@ -211,7 +240,7 @@ function HowItWorks() {
 
   return (
     <section id="how-it-works" className="bg-warm-50 py-24">
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-14">
           <span className="inline-block text-xs font-semibold tracking-widest uppercase text-brand-500 mb-4">
             How It Works
@@ -226,9 +255,6 @@ function HowItWorks() {
               <div className="w-14 h-14 rounded-full bg-brand-500 text-white flex items-center justify-center text-2xl font-bold font-display">
                 {s.n}
               </div>
-              {i < steps.length - 1 && (
-                <div className="hidden md:block absolute" />
-              )}
               <h3 className="text-xl font-semibold text-warm-900">{s.title}</h3>
               <p className="text-base text-warm-600 leading-relaxed max-w-xs">{s.body}</p>
             </div>
@@ -250,7 +276,7 @@ function WhoItsFor() {
 
   return (
     <section className="bg-white border-y border-warm-200 py-24">
-      <div className="max-w-3xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-12">
           <span className="inline-block text-xs font-semibold tracking-widest uppercase text-brand-500 mb-4">
             Who It&apos;s For
@@ -259,15 +285,31 @@ function WhoItsFor() {
             This is for you if...
           </h2>
         </div>
-        <div className="space-y-4">
-          {items.map((item, i) => (
-            <div key={i} className="flex items-start gap-4 bg-warm-50 rounded-xl border border-warm-200 px-6 py-4">
-              <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-brand-500 text-white flex items-center justify-center text-xs font-bold">
-                ✓
-              </span>
-              <p className="text-base text-warm-700 leading-relaxed">{item}</p>
-            </div>
-          ))}
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+          {/* Cat image */}
+          <div className="relative hidden lg:block h-[460px] rounded-3xl overflow-hidden">
+            <Image
+              src="https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=800&q=80"
+              alt="Healthy, serene cat portrait"
+              fill
+              className="object-cover"
+            />
+          </div>
+
+          {/* Checklist */}
+          <div className="space-y-4">
+            {items.map((item, i) => (
+              <div key={i} className="flex items-start gap-4 bg-warm-50 rounded-xl border border-warm-200 px-6 py-4">
+                <span className="mt-0.5 shrink-0 w-6 h-6 rounded-full bg-brand-500 text-white flex items-center justify-center text-xs font-bold">
+                  ✓
+                </span>
+                <p className="text-base text-warm-700 leading-relaxed">{item}</p>
+              </div>
+            ))}
+          </div>
+
         </div>
       </div>
     </section>
@@ -337,9 +379,7 @@ function FAQ() {
         <div className="divide-y divide-warm-200">
           {faqs.map((faq, i) => (
             <div key={i} className="py-6">
-              <h3 className="text-lg font-semibold text-warm-900 mb-2">
-                {faq.q}
-              </h3>
+              <h3 className="text-lg font-semibold text-warm-900 mb-2">{faq.q}</h3>
               <p className="text-base text-warm-600 leading-relaxed">{faq.a}</p>
             </div>
           ))}
@@ -390,7 +430,7 @@ function FinalCTA() {
 function Footer() {
   return (
     <footer className="bg-warm-900 py-10">
-      <div className="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <span className="font-display text-lg font-bold text-white">
           Clean<span className="text-brand-300">Pet</span>List
         </span>
