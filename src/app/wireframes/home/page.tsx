@@ -447,6 +447,206 @@ export default function HomeWireframe() {
         </div>
       </section>
 
+      {/* ========================================================== */}
+      {/* COMBINED — V3 Layout/Typography + V1 Zen Garden Palette    */}
+      {/* ========================================================== */}
+      <div className="border-t-[6px] border-dashed border-gray-300 mt-0" />
+      <div className="bg-[#f7f5f0] py-4 text-center">
+        <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#8a7e6b]">Combined — Literary Layout + Zen Palette</span>
+      </div>
+
+      {/*
+        Golden Ratio System (φ = 1.618)
+        Typography scale: 11px → 18px → 29px → 47px → 76px
+        Spacing (Fibonacci): 8, 13, 21, 34, 55, 89px
+        Layout: content width split at 61.8% / 38.2% (golden ratio)
+        Background: golden rectangle subdivisions + spiral
+      */}
+      <section className="bg-[#f7f5f0] relative overflow-hidden">
+        {/* Paper texture noise */}
+        <div
+          className="absolute inset-0 opacity-[0.4]"
+          style={{
+            backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E\")",
+            backgroundSize: "200px 200px",
+          }}
+        />
+
+        {/* 5-column vertical grid lines with margin */}
+        <div className="absolute inset-0 flex justify-center">
+          <div className="w-full max-w-5xl mx-6 flex justify-between">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <div key={i} className="w-px h-full bg-[#8a7e6b] opacity-[0.07]" />
+            ))}
+          </div>
+        </div>
+
+        {/* Golden rectangle subdivisions + spiral */}
+        <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
+          <svg
+            viewBox="0 0 1000 618"
+            className="w-full max-w-5xl opacity-[0.06]"
+            fill="none"
+            stroke="#8a7e6b"
+            strokeWidth="1"
+          >
+            {/* Outer golden rectangle (1000 × 618 ≈ φ ratio) */}
+            <rect x="0" y="0" width="1000" height="618" />
+            {/* First subdivision: 618×618 square + 382×618 rectangle */}
+            <line x1="618" y1="0" x2="618" y2="618" />
+            {/* Second: 382×382 square from top-right */}
+            <line x1="618" y1="382" x2="1000" y2="382" />
+            {/* Third: 236×236 square */}
+            <line x1="854" y1="382" x2="854" y2="0" />
+            {/* Fourth: 146×146 */}
+            <line x1="854" y1="146" x2="618" y2="146" />
+            {/* Fifth: 90×90 */}
+            <line x1="708" y1="146" x2="708" y2="382" />
+            {/* Sixth: 56×56 */}
+            <line x1="708" y1="292" x2="854" y2="292" />
+
+            {/* Golden spiral (quarter-circle arcs through each square) */}
+            <path
+              d="M 618 618 A 618 618 0 0 1 0 0"
+              strokeWidth="1.5"
+            />
+            <path
+              d="M 1000 382 A 382 382 0 0 1 618 0"
+              strokeWidth="1.5"
+            />
+            <path
+              d="M 854 382 A 236 236 0 0 0 618 146"
+              strokeWidth="1.5"
+            />
+            <path
+              d="M 854 146 A 146 146 0 0 0 708 292"
+              strokeWidth="1.5"
+            />
+            <path
+              d="M 708 292 A 90 90 0 0 1 798 382"
+              strokeWidth="1.5"
+            />
+          </svg>
+        </div>
+
+        {/* φ = 1.618 — Fibonacci spacing: py-89, gaps of 34/21/13/8 */}
+        <div className="max-w-5xl mx-auto px-6 pt-[89px] pb-[55px] relative z-10">
+
+          {/* Two-column golden split: 61.8% text / 38.2% product */}
+          <div className="flex items-start gap-[55px]">
+
+            {/* Left column — 61.8% */}
+            <div className="w-[61.8%]">
+              {/* Ornament */}
+              <div className="flex items-center gap-3 mb-[34px]">
+                <div className="w-[21px] h-px bg-[#d4ccb8]" />
+                <div className="w-1.5 h-1.5 rotate-45 border border-[#a09279]" />
+                <p className="text-[11px] uppercase tracking-[0.4em] text-[#a09279]">
+                  Est. for librarians
+                </p>
+                <div className="w-1.5 h-1.5 rotate-45 border border-[#a09279]" />
+                <div className="w-[21px] h-px bg-[#d4ccb8]" />
+              </div>
+
+              <h1 className="text-5xl leading-[1.15] text-[#3d3626]" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
+                Every book has a story.<br />
+                <span className="italic font-light text-[#8a7e6b]">So does every reader.</span>
+              </h1>
+
+              {/* Body at φ¹ scale ≈ 18px, margin-top Fibonacci 34 */}
+              <p className="mt-[34px] text-[18px] leading-[1.618] text-[#7a6f5e] max-w-[490px] tracking-wide">
+                A management platform that honors the tradition of libraries while embracing the tools of tomorrow. Patron care, catalog mastery, and effortless operations.
+              </p>
+
+              {/* Buttons — gap Fibonacci 13 */}
+              <div className="mt-[34px] flex gap-[13px]">
+                <button className="px-[34px] py-[13px] text-[13px] tracking-[0.15em] uppercase text-[#f7f5f0] bg-[#5c5240] rounded-full hover:bg-[#4a4234] transition-colors font-medium">
+                  Open the Doors
+                </button>
+                <button className="px-[34px] py-[13px] text-[13px] tracking-[0.15em] uppercase text-[#5c5240] border border-[#c4b89a] rounded-full hover:border-[#5c5240] transition-colors">
+                  Take a Tour
+                </button>
+              </div>
+
+              {/* Objection busters — text at φ⁰ ≈ 11px */}
+              <div className="mt-[21px] flex gap-[21px] text-[11px] text-[#a09279] tracking-wide">
+                <span>No credit card</span>
+                <span className="text-[#c4b89a]">/</span>
+                <span>14 days free</span>
+                <span className="text-[#c4b89a]">/</span>
+                <span>Cancel anytime</span>
+              </div>
+
+              {/* Social proof */}
+              <div className="mt-[21px] flex items-center gap-[13px]">
+                <div className="flex -space-x-1.5">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div key={i} className="w-[34px] h-[34px] rounded-full bg-[#ddd5c4] border-2 border-[#f7f5f0]" />
+                  ))}
+                </div>
+                <p className="text-[13px] text-[#8a7e6b]">
+                  <span className="text-[#5c5240] font-medium">500+</span> libraries have turned the page
+                </p>
+              </div>
+            </div>
+
+            {/* Right column — 38.2% — product mock */}
+            <div className="w-[38.2%] pt-[55px]">
+              <div className="relative">
+                {/* Background card layers */}
+                <div className="absolute inset-x-3 top-[5px] bottom-0 bg-[#ede8dc] rounded-2xl border border-[#e0d9c8]" />
+                <div className="absolute inset-x-1.5 top-[3px] bottom-0 bg-[#f0ebe0] rounded-2xl border border-[#e0d9c8]" />
+                {/* Main card */}
+                <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl border border-[#e0d9c8] shadow-[0_8px_60px_rgba(90,80,60,0.06)] overflow-hidden">
+                  {/* Top bar */}
+                  <div className="px-[13px] py-[8px] border-b border-[#e8e2d4] flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-sm border border-[#c4b89a]" />
+                      <span className="text-[9px] tracking-[0.2em] uppercase text-[#a09279]">LibraryOS</span>
+                    </div>
+                    <div className="flex gap-1.5">
+                      <div className="w-[5px] h-[5px] rounded-full bg-[#d4ccb8]" />
+                      <div className="w-[5px] h-[5px] rounded-full bg-[#d4ccb8]" />
+                      <div className="w-[5px] h-[5px] rounded-full bg-[#c4b89a]" />
+                    </div>
+                  </div>
+                  {/* Dashboard content */}
+                  <div className="p-[13px] space-y-[8px]">
+                    {/* Stat cards — Fibonacci 8px gap */}
+                    <div className="grid grid-cols-2 gap-[8px]">
+                      {[
+                        { label: "Active Patrons", val: "12,847" },
+                        { label: "Circulating", val: "4,291" },
+                        { label: "Overdue", val: "87" },
+                        { label: "Media Out", val: "1,340" },
+                      ].map((stat) => (
+                        <div key={stat.label} className="bg-[#f7f5f0] border border-[#e8e2d4] rounded-lg p-[8px]">
+                          <p className="text-[8px] uppercase tracking-wider text-[#a09279]">{stat.label}</p>
+                          <p className="text-[18px] font-bold text-[#3d3626] mt-[3px] tracking-wide">{stat.val}</p>
+                        </div>
+                      ))}
+                    </div>
+                    {/* Activity list */}
+                    <div className="bg-[#f7f5f0] border border-[#e8e2d4] rounded-lg p-[8px] space-y-[5px]">
+                      <p className="text-[8px] uppercase tracking-wider text-[#a09279]">Recent Activity</p>
+                      {[1, 2, 3].map((i) => (
+                        <div key={i} className="flex items-center gap-[5px]">
+                          <div className="w-[13px] h-[13px] rounded-full bg-[#e8e2d4] shrink-0" />
+                          <div className="h-[3px] rounded bg-[#e8e2d4] flex-1" />
+                          <div className="h-[3px] w-[21px] rounded bg-[#e8e2d4]" />
+                        </div>
+                      ))}
+                    </div>
+                    {/* Chart placeholder — golden rectangle proportioned */}
+                    <div className="bg-[#f7f5f0] border border-[#e8e2d4] rounded-lg" style={{ aspectRatio: "1.618 / 1" }} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ---- SOCIAL PROOF BAR ---- */}
       <section className="border-y border-gray-200 bg-gray-50">
         <div className="max-w-6xl mx-auto px-6 py-8 text-center">
