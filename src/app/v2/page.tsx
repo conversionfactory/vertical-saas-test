@@ -191,6 +191,7 @@ function Hero() {
       className="relative overflow-hidden"
       style={{ height: "100vh", minHeight: "680px" }}
     >
+      {/* Photo fills the entire viewport — fully visible, no overlays */}
       <Image
         src="https://images.unsplash.com/photo-1594149929911-78975a43d4f5?w=1800&q=85"
         alt="Happy golden retriever in natural sunlight"
@@ -199,52 +200,42 @@ function Hero() {
         priority
       />
 
-      {/* Warm cream overlay — left to right */}
+      {/* Bottom transition to next section */}
       <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(to right, rgba(250,250,248,0.97) 0%, rgba(250,250,248,0.90) 32%, rgba(250,250,248,0.48) 56%, rgba(250,250,248,0.08) 74%, transparent 86%)",
-        }}
-      />
-      {/* Top fade for nav */}
-      <div
-        className="absolute inset-0"
-        style={{ background: "linear-gradient(to bottom, rgba(250,250,248,0.55) 0%, transparent 18%)" }}
-      />
-      {/* Bottom fade to next section */}
-      <div
-        className="absolute inset-0"
-        style={{ background: "linear-gradient(to top, #FAFAF8 0%, transparent 14%)" }}
+        className="absolute inset-x-0 bottom-0 h-20"
+        style={{ background: "linear-gradient(to top, #FAFAF8, transparent)" }}
       />
 
-      {/* Content — left-aligned, vertically centered */}
+      {/* Content — solid floating card anchored left */}
       <div className="absolute inset-0 flex items-center">
         <div className="max-w-6xl mx-auto px-6 w-full">
-          <div style={{ maxWidth: "65%" }}>
-
+          <div
+            className="rounded-2xl p-10 space-y-0"
+            style={{
+              background: "#FAFAF8",
+              boxShadow: "0 16px 64px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.06)",
+              maxWidth: "520px",
+            }}
+          >
             {/* Badge */}
             <div
-              className="hero-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-7"
+              className="hero-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6"
               style={{ background: "#EDF4F0", border: "1px solid #AECFBC" }}
             >
               <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#3D6B4F" }} />
-              <span
-                className="text-xs font-semibold tracking-widest uppercase"
-                style={{ color: "#315741" }}
-              >
+              <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#315741" }}>
                 Free Weekly Newsletter
               </span>
             </div>
 
             {/* Headline */}
             <h1
-              className="hero-h1 leading-tight mb-5 text-warm-900"
+              className="hero-h1 leading-tight mb-4 text-warm-900"
               style={{
                 fontFamily: "var(--font-lora)",
                 fontWeight: 700,
-                fontSize: "clamp(2.8rem, 5vw, 4.4rem)",
-                letterSpacing: "-0.025em",
+                fontSize: "clamp(2rem, 2.8vw, 2.8rem)",
+                letterSpacing: "-0.02em",
               }}
             >
               Everything your pet needs.
@@ -254,18 +245,18 @@ function Hero() {
 
             {/* Subheadline */}
             <p
-              className="hero-sub leading-relaxed mb-9 text-warm-600"
-              style={{ fontSize: "1.1rem" }}
+              className="hero-sub leading-relaxed mb-8 text-warm-600"
+              style={{ fontSize: "1rem" }}
             >
               Vetted organic and natural pet products — food, treats, toys,
               supplements — sent to your inbox every week. Free.
             </p>
 
             {/* Email form */}
-            <form className="hero-form space-y-3" style={{ maxWidth: "480px" }}>
+            <form className="hero-form space-y-3">
               <div
                 className="form-wrap flex gap-2 p-1.5 rounded-xl bg-white"
-                style={{ border: "1px solid #E8E6E1", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}
+                style={{ border: "1px solid #E8E6E1", boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }}
               >
                 <input
                   type="email"
@@ -285,15 +276,12 @@ function Hero() {
                 No spam. No greenwashing. Unsubscribe anytime.
               </p>
             </form>
-
           </div>
         </div>
       </div>
 
       {/* Scroll hint */}
-      <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-warm-400"
-      >
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-warm-400">
         <span className="text-xs tracking-widest uppercase font-medium">Scroll</span>
         <svg width="14" height="20" viewBox="0 0 14 20" fill="none">
           <rect x="1" y="1" width="12" height="18" rx="6" stroke="currentColor" strokeWidth="1.5" />
@@ -382,12 +370,6 @@ function Problem() {
           fill
           className="object-cover object-center"
         />
-        <div
-          className="absolute inset-0"
-          style={{ background: "linear-gradient(to right, #FAFAF8 0%, transparent 18%, transparent 82%, #FAFAF8 100%)" }}
-        />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, #FAFAF8 0%, transparent 30%)" }} />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, #FFFFFF 0%, transparent 40%)" }} />
       </div>
     </section>
   );
