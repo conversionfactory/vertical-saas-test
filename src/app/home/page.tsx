@@ -1,5 +1,5 @@
 /*
-  HOMEPAGE — LibraryOS Marketing Site
+  HOMEPAGE — Libr.OS Marketing Site
   ────────────────────────────────────
   Style guide applied: Parthenon palette, golden ratio typography,
   Fibonacci spacing, Georgia serif headings, warm shadows.
@@ -21,6 +21,65 @@ function Ornament() {
     </div>
   );
 }
+
+/* ── Hand-drawn icons (wobbly SVG displacement) ── */
+const wobbleFilter = (id: string, seed: number) => (
+  <defs>
+    <filter id={id}>
+      <feTurbulence baseFrequency="0.04" numOctaves="3" seed={seed} result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+);
+
+function IconPatron({ size = 28, color = "#4a8cc7" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 28 28" fill="none">
+      {wobbleFilter("wp", 1)}
+      <circle cx="14" cy="9" r="5" stroke={color} strokeWidth="1.5" strokeLinecap="round" filter="url(#wp)"/>
+      <path d="M5 25c0-5 4-9 9-9s9 4 9 9" stroke={color} strokeWidth="1.5" strokeLinecap="round" filter="url(#wp)"/>
+    </svg>
+  );
+}
+
+function IconBook({ size = 28, color = "#8a8f6a" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 28 28" fill="none">
+      {wobbleFilter("wb", 3)}
+      <path d="M5 4c0 0 3-1 9-1s9 1 9 1v20s-3-1-9-1-9 1-9 1V4Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" filter="url(#wb)"/>
+      <path d="M14 3v21" stroke={color} strokeWidth="1.5" strokeLinecap="round" filter="url(#wb)"/>
+    </svg>
+  );
+}
+
+function IconBilling({ size = 28, color = "#c2ad6e" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 28 28" fill="none">
+      {wobbleFilter("wbi", 5)}
+      <rect x="4" y="6" width="20" height="16" rx="2" stroke={color} strokeWidth="1.5" strokeLinecap="round" filter="url(#wbi)"/>
+      <line x1="4" y1="12" x2="24" y2="12" stroke={color} strokeWidth="1.5" filter="url(#wbi)"/>
+      <line x1="17" y1="18" x2="21" y2="18" stroke={color} strokeWidth="1.5" strokeLinecap="round" filter="url(#wbi)"/>
+    </svg>
+  );
+}
+
+function IconMedia({ size = 28, color = "#4a8cc7" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 28 28" fill="none">
+      {wobbleFilter("wm", 7)}
+      <circle cx="14" cy="14" r="10" stroke={color} strokeWidth="1.5" filter="url(#wm)"/>
+      <circle cx="14" cy="14" r="4" stroke={color} strokeWidth="1.5" filter="url(#wm)"/>
+      <circle cx="14" cy="14" r="1.5" fill={color}/>
+    </svg>
+  );
+}
+
+const featureIcons: Record<string, React.FC<{ size?: number; color?: string }>> = {
+  "Patron Management": IconPatron,
+  "Book Catalog": IconBook,
+  "Late Fees & Billing": IconBilling,
+  "Media Rentals": IconMedia,
+};
 
 export default function HomePage() {
   return (
@@ -112,7 +171,7 @@ export default function HomePage() {
       />
 
       {/* Global 5-column grid lines — runs through entire page */}
-      <div className="fixed inset-0 flex justify-center pointer-events-none z-[1]">
+      <div className="fixed inset-0 hidden md:flex justify-center pointer-events-none z-[1]">
         <div className="w-full max-w-5xl mx-6 flex justify-between">
           {[0, 1, 2, 3, 4].map((i) => (
             <div key={i} className="w-px h-full bg-[#8a7e6b] opacity-[0.07]" />
@@ -122,25 +181,27 @@ export default function HomePage() {
 
       {/* ─── NAV ─── */}
       <nav className="relative z-20 border-b border-[#e0d9c8]">
-        <div className="max-w-5xl mx-auto px-6 py-[13px] flex items-center justify-between">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-[13px] flex items-center justify-between">
           <div className="flex items-center gap-[34px]">
             <div className="flex items-center gap-[8px]">
               <div className="w-[21px] h-[21px] rounded-sm border border-[#c4b89a]" />
-              <span className="text-[13px] tracking-[0.15em] uppercase text-[#5c5240] font-medium">LibraryOS</span>
+              <span className="text-[13px] tracking-[0.15em] uppercase text-[#5c5240] font-medium">Libr.OS</span>
             </div>
-            <div className="flex gap-[21px] text-[13px] text-[#8a7e6b]">
+            <div className="hidden md:flex gap-[21px] text-[13px] text-[#8a7e6b]">
               {["Features", "Pricing", "About", "Resources", "Contact"].map((item) => (
                 <span key={item} className="hover:text-[#3d3626] transition-colors cursor-pointer">{item}</span>
               ))}
             </div>
           </div>
           <div className="flex gap-[8px]">
-            <button className="px-[21px] py-[8px] text-[13px] tracking-[0.1em] uppercase text-[#7a6f5e] rounded-full hover:bg-[#ede8dc] transition-colors">
-              Log in
+            <button className="relative px-[21px] py-[8px] text-[13px] tracking-[0.1em] uppercase text-[#7a6f5e] rounded-full overflow-hidden hover:shadow-[0_0_16px_rgba(58,109,148,0.25)] transition-all duration-300 group/login">
+              <span className="absolute inset-0 rounded-full bg-black/0 group-hover/login:bg-black/[0.04] transition-all duration-300" />
+              <span className="relative z-10">Log in</span>
             </button>
-            <div className="rounded-full border border-[#b3cde0] p-[2px]">
-              <button className="relative px-[21px] py-[8px] text-[11px] tracking-[0.1em] uppercase text-white rounded-full font-medium active:scale-[0.97] transition-all overflow-hidden"
+            <div className="rounded-full border border-[#b3cde0] p-[2px] hover:border-[#4a8cc7] hover:shadow-[0_0_16px_rgba(58,109,148,0.25)] transition-all duration-300 group/nav">
+              <button className="relative px-[21px] py-[8px] text-[11px] tracking-[0.1em] uppercase text-white rounded-full font-medium active:scale-[0.97] transition-all duration-300 overflow-hidden"
                 style={{ background: "linear-gradient(to bottom, #3a6d94, #2a5070)", boxShadow: "0 1px 0 0 rgba(255,255,255,0.12) inset, 0 -1px 0 0 rgba(0,0,0,0.2) inset, 0 3px 8px rgba(42,80,112,0.3), 0 1px 2px rgba(0,0,0,0.12)" }}>
+                <span className="absolute inset-0 rounded-full bg-black/0 group-hover/nav:bg-black/15 transition-all duration-300" />
                 <span className="relative z-10">Sign up</span>
               </button>
             </div>
@@ -151,7 +212,7 @@ export default function HomePage() {
       {/* ─── HERO ─── */}
       <section className="relative z-10">
         {/* Golden rectangle + spiral */}
-        <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
+        <div className="absolute inset-0 hidden md:flex justify-center items-center pointer-events-none">
           <svg viewBox="0 0 1000 618" className="w-full max-w-5xl opacity-[0.06]" fill="none" stroke="#8a7e6b" strokeWidth="1">
             <rect x="0" y="0" width="1000" height="618" />
             <line x1="618" y1="0" x2="618" y2="618" />
@@ -168,8 +229,8 @@ export default function HomePage() {
           </svg>
         </div>
 
-        <div className="max-w-5xl mx-auto px-6 pt-[89px] pb-[55px] relative z-10">
-          <div className="grid grid-cols-[1fr_1fr] gap-[55px] items-center">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 pt-[55px] md:pt-[89px] pb-[34px] md:pb-[55px] relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-[34px] md:gap-[55px] items-center">
             {/* Left — text */}
             <div>
               <div className="flex items-center gap-3 mb-[34px]">
@@ -180,24 +241,26 @@ export default function HomePage() {
                 <div className="w-[21px] h-px bg-[#d4ccb8]" />
               </div>
 
-              <h1 className="text-[36px] leading-[1.2] text-[#3d3626]" style={{ fontFamily: serif }}>
+              <h1 className="text-[28px] md:text-[36px] leading-[1.2] text-[#3d3626]" style={{ fontFamily: serif }}>
                 Every book has a story.<br />
                 <span className="italic font-light text-[#8a7e6b]">So does every reader.</span>
               </h1>
 
-              <p className="mt-[34px] text-[18px] leading-[1.618] text-[#7a6f5e] max-w-[490px] tracking-wide">
+              <p className="mt-[21px] md:mt-[34px] text-[16px] md:text-[18px] leading-[1.618] text-[#7a6f5e] max-w-[490px] tracking-wide">
                 A management platform that honors the tradition of libraries while embracing the tools of tomorrow. Patron care, catalog mastery, and effortless operations.
               </p>
 
-              <div className="mt-[34px] flex gap-[13px] items-center">
-                <div className="rounded-full border border-[#b3cde0] p-[3px]">
-                  <button className="relative px-[34px] py-[13px] text-[13px] tracking-[0.15em] uppercase text-white rounded-full font-medium active:scale-[0.97] transition-all overflow-hidden"
+              <div className="mt-[21px] md:mt-[34px] flex flex-col sm:flex-row gap-[13px] items-start sm:items-center">
+                <div className="rounded-full border border-[#b3cde0] p-[3px] hover:border-[#4a8cc7] hover:shadow-[0_0_16px_rgba(58,109,148,0.25)] transition-all duration-300 group/hero">
+                  <button className="relative px-[34px] py-[13px] text-[13px] tracking-[0.15em] uppercase text-white rounded-full font-medium active:scale-[0.97] transition-all duration-300 overflow-hidden"
                     style={{ background: "linear-gradient(to bottom, #3a6d94, #2a5070)", boxShadow: "0 1px 0 0 rgba(255,255,255,0.12) inset, 0 -1px 0 0 rgba(0,0,0,0.2) inset, 0 4px 12px rgba(42,80,112,0.35), 0 1px 3px rgba(0,0,0,0.15)" }}>
+                    <span className="absolute inset-0 rounded-full bg-black/0 group-hover/hero:bg-black/15 transition-all duration-300" />
                     <span className="relative z-10">Open the Doors</span>
                   </button>
                 </div>
-                <button className="px-[34px] py-[13px] text-[13px] tracking-[0.15em] uppercase text-[#5c5240] border border-[#c4b89a] rounded-full hover:border-[#5c5240] hover:bg-[#5c5240]/5 active:scale-95 transition-all">
-                  Take a Tour
+                <button className="relative px-[34px] py-[13px] text-[13px] tracking-[0.15em] uppercase text-[#5c5240] border border-[#c4b89a] rounded-full overflow-hidden hover:border-[#5c5240] hover:bg-[#5c5240] hover:text-[#f7f5f0] hover:shadow-[0_0_16px_rgba(58,109,148,0.25)] transition-all duration-300 active:scale-95 group/tour">
+                  <span className="absolute inset-0 rounded-full bg-black/0 group-hover/tour:bg-black/10 transition-all duration-300" />
+                  <span className="relative z-10">Take a Tour</span>
                 </button>
               </div>
 
@@ -223,8 +286,8 @@ export default function HomePage() {
 
             {/* Right — product mock */}
             <div>
-              <div className="relative max-w-[380px] mx-auto">
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[440px] h-[440px] rounded-full border border-[#b3cde0]">
+              <div className="relative max-w-[320px] md:max-w-[380px] mx-auto">
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[440px] h-[440px] rounded-full border border-[#b3cde0] hidden md:block">
                   <div className="absolute left-1/2 top-1/2 w-[6px] h-[6px] rounded-full bg-[#b3cde0] -ml-[3px] -mt-[3px]" style={{ animation: "orbit 12s linear infinite, orbitBlip 2s ease-out infinite", ["--orbit-r" as string]: "220px", ["--blip-color" as string]: "rgba(179,205,224,0.5)" }} />
                 </div>
                 <div className="absolute inset-x-3 top-[5px] bottom-0 bg-[#ede8dc] rounded-2xl border border-[#e0d9c8]" />
@@ -233,7 +296,7 @@ export default function HomePage() {
                   <div className="px-[13px] py-[8px] border-b border-[#e8e2d4] flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-sm border border-[#c4b89a]" />
-                      <span className="text-[9px] tracking-[0.2em] uppercase text-[#a09279]">LibraryOS</span>
+                      <span className="text-[9px] tracking-[0.2em] uppercase text-[#a09279]">Libr.OS</span>
                     </div>
                     <div className="flex gap-1.5">
                       <div className="w-[5px] h-[5px] rounded-full bg-[#d4ccb8]" />
@@ -276,10 +339,14 @@ export default function HomePage() {
                         </div>
                       ))}
                     </div>
-                    {/* Chart — gradient sweep animation */}
+                    {/* Library image */}
                     <div className="rounded-lg border border-[#e8e2d4] overflow-hidden relative" style={{ aspectRatio: "1.618 / 1" }}>
-                      <div className="w-full h-full opacity-[0.15]" style={{ background: "linear-gradient(135deg, #c8d5df 0%, #f7f5f0 40%, #c9cdb8 70%, #e5d5a8 100%)" }} />
-                      <div className="absolute inset-0 anim-sweep" />
+                      <img
+                        src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=600&q=80&auto=format&fit=crop"
+                        alt="Public library interior"
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#f7f5f0]/30 to-transparent" />
                     </div>
                   </div>
                 </div>
@@ -291,8 +358,8 @@ export default function HomePage() {
 
       {/* ─── SOCIAL PROOF BAR ─── */}
       <section className="relative z-10 border-y border-[#8a7e6b]/[0.07]">
-        <div className="max-w-5xl mx-auto px-6 py-[34px] text-center">
-          <p className="text-[11px] uppercase tracking-[0.4em] text-[#a09279] mb-[21px]">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-[21px] md:py-[34px] text-center">
+          <p className="text-[11px] uppercase tracking-[0.4em] text-[#a09279] mb-[13px] md:mb-[21px]">
             Trusted by libraries everywhere
           </p>
           <div className="relative overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)", WebkitMaskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)" }}>
@@ -314,40 +381,43 @@ export default function HomePage() {
 
       {/* ─── FEATURES OVERVIEW ─── */}
       <section className="relative z-10">
-        <div className="max-w-5xl mx-auto py-[89px]">
-          <div className="text-center mb-[55px]">
-            <h2 className="text-[29px] text-[#3d3626]" style={{ fontFamily: serif }}>
+        <div className="max-w-5xl mx-auto px-4 md:px-0 py-[55px] md:py-[89px]">
+          <div className="text-center mb-[34px] md:mb-[55px]">
+            <h2 className="text-[24px] md:text-[29px] text-[#3d3626]" style={{ fontFamily: serif }}>
               Everything your library needs
             </h2>
             <p className="mt-[13px] text-[14px] text-[#8a7e6b] max-w-[420px] mx-auto leading-[1.618]">
               A complete toolkit designed specifically for modern librarians.
             </p>
           </div>
-          <div className="grid grid-cols-4 justify-items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[13px] sm:gap-0 justify-items-center">
             {[
               { title: "Patron Management", desc: "Track visitors, memberships, and check-ins with ease.", accent: "#4a8cc7" },
               { title: "Book Catalog", desc: "Search, organize, and manage your full inventory.", accent: "#8a8f6a" },
               { title: "Late Fees & Billing", desc: "Automate fee calculation and simplify payments.", accent: "#c2ad6e" },
               { title: "Media Rentals", desc: "Handle DVDs, Blu-rays, and digital media lending.", accent: "#4a8cc7" },
-            ].map((f) => (
+            ].map((f) => {
+              const Icon = featureIcons[f.title];
+              return (
               <div key={f.title} className="w-[calc(100%-24px)] p-[34px] bg-white/80 backdrop-blur-sm rounded-xl border border-[#e0d9c8] shadow-[0_2px_8px_rgba(90,80,60,0.04)] hover:-translate-y-[3px] hover:shadow-[0_8px_40px_rgba(90,80,60,0.08)] transition-all duration-300">
-                <div className="w-[34px] h-[34px] rounded-lg bg-[#ede8dc] border border-[#e0d9c8] flex items-center justify-center mb-[21px]">
-                  <div className="w-[8px] h-[8px] rounded-full" style={{ backgroundColor: f.accent }} />
+                <div className="w-[42px] h-[42px] rounded-lg bg-[#ede8dc] border border-[#e0d9c8] flex items-center justify-center mb-[21px]">
+                  {Icon ? <Icon size={24} color={f.accent} /> : <div className="w-[8px] h-[8px] rounded-full" style={{ backgroundColor: f.accent }} />}
                 </div>
                 <h3 className="text-[14px] font-medium text-[#3d3626] mb-[8px]">{f.title}</h3>
                 <p className="text-[13px] text-[#8a7e6b] leading-[1.618]">{f.desc}</p>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* ─── FEATURE DETAIL 1 — Patron Management ─── */}
       <section className="relative z-10 border-y border-[#8a7e6b]/[0.07]">
-        <div className="max-w-5xl mx-auto px-6 py-[89px] grid grid-cols-[1fr_1fr] gap-[55px] items-center">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-[55px] md:py-[89px] grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-[34px] md:gap-[55px] items-center">
           <div>
             <div className="flex items-center gap-[8px] mb-[13px]">
-              <div className="w-[8px] h-[8px] rounded-full bg-[#4a8cc7]" />
+              <IconPatron size={18} color="#4a8cc7" />
               <span className="text-[11px] uppercase tracking-[0.3em] text-[#a09279]">Patron Management</span>
             </div>
             <h2 className="text-[29px] text-[#3d3626] leading-[1.3]" style={{ fontFamily: serif }}>
@@ -366,8 +436,8 @@ export default function HomePage() {
             </ul>
           </div>
           <div>
-            <div className="relative max-w-[380px] mx-auto">
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#b3cde0]">
+            <div className="relative max-w-[320px] md:max-w-[380px] mx-auto">
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#b3cde0] hidden md:block">
                 <div className="absolute left-1/2 top-1/2 w-[6px] h-[6px] rounded-full bg-[#b3cde0] -ml-[3px] -mt-[3px]" style={{ animation: "orbit 10s linear infinite, orbitBlip 2s ease-out infinite", ["--orbit-r" as string]: "150px", ["--blip-color" as string]: "rgba(179,205,224,0.5)" }} />
               </div>
               <div className="absolute inset-x-2 top-[3px] bottom-0 bg-[#ede8dc] rounded-xl border border-[#e0d9c8]" />
@@ -410,10 +480,10 @@ export default function HomePage() {
 
       {/* ─── FEATURE DETAIL 2 — Book Catalog (reversed) ─── */}
       <section className="relative z-10">
-        <div className="max-w-5xl mx-auto px-6 py-[89px] grid grid-cols-[1fr_1fr] gap-[55px] items-center">
-          <div>
-            <div className="relative max-w-[380px] mx-auto">
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#c2c5b2]">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-[55px] md:py-[89px] grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-[34px] md:gap-[55px] items-center">
+          <div className="order-2 md:order-1">
+            <div className="relative max-w-[320px] md:max-w-[380px] mx-auto">
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#c2c5b2] hidden md:block">
                 <div className="absolute left-1/2 top-1/2 w-[6px] h-[6px] rounded-full bg-[#c2c5b2] -ml-[3px] -mt-[3px]" style={{ animation: "orbit 10s linear infinite, orbitBlip 2s ease-out infinite", ["--orbit-r" as string]: "150px", ["--blip-color" as string]: "rgba(194,197,178,0.5)" }} />
               </div>
               <div className="absolute inset-x-2 top-[3px] bottom-0 bg-[#ede8dc] rounded-xl border border-[#e0d9c8]" />
@@ -455,9 +525,9 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <div>
+          <div className="order-1 md:order-2">
             <div className="flex items-center gap-[8px] mb-[13px]">
-              <div className="w-[8px] h-[8px] rounded-full bg-[#8a8f6a]" />
+              <IconBook size={18} color="#8a8f6a" />
               <span className="text-[11px] uppercase tracking-[0.3em] text-[#a09279]">Book Catalog</span>
             </div>
             <h2 className="text-[29px] text-[#3d3626] leading-[1.3]" style={{ fontFamily: serif }}>
@@ -480,10 +550,10 @@ export default function HomePage() {
 
       {/* ─── FEATURE DETAIL 3 — Late Fees & Billing ─── */}
       <section className="relative z-10 border-y border-[#8a7e6b]/[0.07]">
-        <div className="max-w-5xl mx-auto px-6 py-[89px] grid grid-cols-[1fr_1fr] gap-[55px] items-center">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-[55px] md:py-[89px] grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-[34px] md:gap-[55px] items-center">
           <div>
             <div className="flex items-center gap-[8px] mb-[13px]">
-              <div className="w-[8px] h-[8px] rounded-full bg-[#c2ad6e]" />
+              <IconBilling size={18} color="#c2ad6e" />
               <span className="text-[11px] uppercase tracking-[0.3em] text-[#a09279]">Late Fees &amp; Billing</span>
             </div>
             <h2 className="text-[29px] text-[#3d3626] leading-[1.3]" style={{ fontFamily: serif }}>
@@ -502,8 +572,8 @@ export default function HomePage() {
             </ul>
           </div>
           <div>
-            <div className="relative max-w-[380px] mx-auto">
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#e6dbb0]">
+            <div className="relative max-w-[320px] md:max-w-[380px] mx-auto">
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#e6dbb0] hidden md:block">
                 <div className="absolute left-1/2 top-1/2 w-[6px] h-[6px] rounded-full bg-[#e6dbb0] -ml-[3px] -mt-[3px]" style={{ animation: "orbit 10s linear infinite, orbitBlip 2s ease-out infinite", ["--orbit-r" as string]: "150px", ["--blip-color" as string]: "rgba(230,219,176,0.5)" }} />
               </div>
               <div className="absolute inset-x-2 top-[3px] bottom-0 bg-[#ede8dc] rounded-xl border border-[#e0d9c8]" />
@@ -550,10 +620,10 @@ export default function HomePage() {
 
       {/* ─── FEATURE DETAIL 4 — Media Rentals (reversed) ─── */}
       <section className="relative z-10">
-        <div className="max-w-5xl mx-auto px-6 py-[89px] grid grid-cols-[1fr_1fr] gap-[55px] items-center">
-          <div>
-            <div className="relative max-w-[380px] mx-auto">
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#b3cde0]">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-[55px] md:py-[89px] grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-[34px] md:gap-[55px] items-center">
+          <div className="order-2 md:order-1">
+            <div className="relative max-w-[320px] md:max-w-[380px] mx-auto">
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#b3cde0] hidden md:block">
                 <div className="absolute left-1/2 top-1/2 w-[6px] h-[6px] rounded-full bg-[#b3cde0] -ml-[3px] -mt-[3px]" style={{ animation: "orbit 10s linear infinite, orbitBlip 2s ease-out infinite", ["--orbit-r" as string]: "150px", ["--blip-color" as string]: "rgba(179,205,224,0.5)" }} />
               </div>
               <div className="absolute inset-x-2 top-[3px] bottom-0 bg-[#ede8dc] rounded-xl border border-[#e0d9c8]" />
@@ -592,9 +662,9 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <div>
+          <div className="order-1 md:order-2">
             <div className="flex items-center gap-[8px] mb-[13px]">
-              <div className="w-[8px] h-[8px] rounded-full bg-[#4a8cc7]" />
+              <IconMedia size={18} color="#4a8cc7" />
               <span className="text-[11px] uppercase tracking-[0.3em] text-[#a09279]">Media Rentals</span>
             </div>
             <h2 className="text-[29px] text-[#3d3626] leading-[1.3]" style={{ fontFamily: serif }}>
@@ -617,16 +687,16 @@ export default function HomePage() {
 
       {/* ─── TESTIMONIALS ─── */}
       <section className="relative z-10 border-y border-[#8a7e6b]/[0.07]">
-        <div className="max-w-5xl mx-auto px-6 py-[89px]">
-          <div className="text-center mb-[55px]">
-            <h2 className="text-[29px] text-[#3d3626]" style={{ fontFamily: serif }}>
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-[55px] md:py-[89px]">
+          <div className="text-center mb-[34px] md:mb-[55px]">
+            <h2 className="text-[24px] md:text-[29px] text-[#3d3626]" style={{ fontFamily: serif }}>
               Loved by librarians
             </h2>
             <p className="mt-[13px] text-[14px] text-[#8a7e6b]">
               Real stories from real library professionals.
             </p>
           </div>
-          <div className="grid grid-cols-3 gap-[21px]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-[13px] md:gap-[21px]">
             {[
               { name: "Sarah M.", role: "Head Librarian", quote: "Finally a system that understands how libraries actually work. Our checkout times dropped by half.", accent: "#4a8cc7" },
               { name: "James K.", role: "District Manager", quote: "We rolled this out across 12 branches in a week. The onboarding was incredibly smooth.", accent: "#8a8f6a" },
@@ -656,16 +726,16 @@ export default function HomePage() {
 
       {/* ─── PRICING ─── */}
       <section className="relative z-10">
-        <div className="max-w-5xl mx-auto px-6 py-[89px]">
-          <div className="text-center mb-[55px]">
-            <h2 className="text-[29px] text-[#3d3626]" style={{ fontFamily: serif }}>
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-[55px] md:py-[89px]">
+          <div className="text-center mb-[34px] md:mb-[55px]">
+            <h2 className="text-[24px] md:text-[29px] text-[#3d3626]" style={{ fontFamily: serif }}>
               Simple, transparent pricing
             </h2>
             <p className="mt-[13px] text-[14px] text-[#8a7e6b]">
               Plans that scale with your library system.
             </p>
           </div>
-          <div className="max-w-[610px] mx-auto grid grid-cols-3 gap-[13px]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-[13px] md:gap-[21px]">
             {[
               { tier: "Small Library", price: "$29", period: "/mo", cta: "Get Started", featured: false, features: ["Up to 500 patrons", "1 branch", "Email support", "Core features"] },
               { tier: "District", price: "$99", period: "/mo", cta: "Get Started", featured: true, features: ["Unlimited patrons", "Up to 10 branches", "Priority support", "Advanced analytics"] },
@@ -673,23 +743,25 @@ export default function HomePage() {
             ].map((p) => (
               <div
                 key={p.tier}
-                className={`p-[21px] rounded-xl transition-all duration-300 hover:-translate-y-[3px] ${
+                className={`p-[21px] rounded-xl transition-all duration-300 hover:-translate-y-[3px] flex flex-col ${
                   p.featured
                     ? "bg-white/90 backdrop-blur-sm border border-[#5c5240] shadow-[0_4px_34px_rgba(90,80,60,0.08)] hover:shadow-[0_8px_40px_rgba(90,80,60,0.12)]"
                     : "bg-white/50 border border-[#e0d9c8] shadow-[0_2px_8px_rgba(90,80,60,0.04)] hover:shadow-[0_8px_40px_rgba(90,80,60,0.08)]"
                 }`}
               >
-                {p.featured && (
-                  <span className="inline-block px-[8px] py-[2px] text-[7px] uppercase tracking-[0.3em] rounded-full bg-[#cdd0bc] text-[#444830] font-medium mb-[8px]">
-                    Most Popular
-                  </span>
-                )}
+                <div className="h-[22px] mb-[8px]">
+                  {p.featured && (
+                    <span className="inline-block px-[8px] py-[2px] text-[7px] uppercase tracking-[0.3em] rounded-full bg-[#cdd0bc] text-[#444830] font-medium">
+                      Most Popular
+                    </span>
+                  )}
+                </div>
                 <p className="text-[11px] uppercase tracking-[0.3em] text-[#a09279]">{p.tier}</p>
                 <div className="mt-[5px] flex items-end gap-[3px]">
                   <span className="text-[29px] font-bold text-[#3d3626] leading-none" style={{ fontFamily: serif }}>{p.price}</span>
                   {p.period && <span className="text-[13px] text-[#a09279] mb-[3px]">{p.period}</span>}
                 </div>
-                <ul className="mt-[13px] space-y-[8px]">
+                <ul className="mt-[13px] space-y-[8px] flex-1">
                   {p.features.map((f) => (
                     <li key={f} className="flex items-center gap-[8px] text-[13px] text-[#5c5240]">
                       <div className="w-[4px] h-[4px] rounded-full bg-[#a6ab8e] shrink-0" />
@@ -698,15 +770,17 @@ export default function HomePage() {
                   ))}
                 </ul>
                 {p.featured ? (
-                  <div className="mt-[21px] rounded-full border border-[#b3cde0] p-[2px]">
-                    <button className="relative w-full py-[8px] rounded-full text-[11px] tracking-[0.15em] uppercase text-white font-medium active:scale-[0.97] transition-all overflow-hidden"
+                  <div className="mt-[21px] rounded-full border border-[#b3cde0] p-[2px] hover:border-[#4a8cc7] hover:shadow-[0_0_16px_rgba(58,109,148,0.25)] transition-all duration-300 group/btn">
+                    <button className="relative w-full py-[8px] rounded-full text-[11px] tracking-[0.15em] uppercase text-white font-medium active:scale-[0.97] transition-all duration-300 overflow-hidden"
                       style={{ background: "linear-gradient(to bottom, #3a6d94, #2a5070)", boxShadow: "0 1px 0 0 rgba(255,255,255,0.12) inset, 0 -1px 0 0 rgba(0,0,0,0.2) inset, 0 3px 8px rgba(42,80,112,0.3), 0 1px 2px rgba(0,0,0,0.12)" }}>
+                      <span className="absolute inset-0 rounded-full bg-black/0 group-hover/btn:bg-black/15 transition-all duration-300" />
                       <span className="relative z-10">{p.cta}</span>
                     </button>
                   </div>
                 ) : (
-                  <button className="mt-[21px] w-full py-[8px] rounded-full text-[11px] tracking-[0.15em] uppercase border border-[#c4b89a] text-[#5c5240] hover:border-[#5c5240] hover:bg-[#5c5240]/5 transition-all active:scale-95">
-                    {p.cta}
+                  <button className="relative mt-[21px] w-full py-[8px] rounded-full text-[11px] tracking-[0.15em] uppercase border border-[#c4b89a] text-[#5c5240] overflow-hidden hover:border-[#5c5240] hover:bg-[#5c5240] hover:text-[#f7f5f0] hover:shadow-[0_0_16px_rgba(58,109,148,0.25)] transition-all duration-300 active:scale-95 group/outline">
+                    <span className="absolute inset-0 rounded-full bg-black/0 group-hover/outline:bg-black/10 transition-all duration-300" />
+                    <span className="relative z-10">{p.cta}</span>
                   </button>
                 )}
               </div>
@@ -717,7 +791,7 @@ export default function HomePage() {
 
       {/* ─── FINAL CTA ─── */}
       <section className="relative z-10 bg-[#2a2419]">
-        <div className="max-w-5xl mx-auto px-6 py-[89px] text-center relative">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-[55px] md:py-[89px] text-center relative">
           {/* Subtle golden rectangle overlay */}
           <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
             <svg viewBox="0 0 1000 618" className="w-full max-w-[400px] opacity-[0.04]" fill="none" stroke="#c4b89a" strokeWidth="1">
@@ -737,12 +811,14 @@ export default function HomePage() {
             <p className="mt-[13px] text-[14px] text-[#8a7e6b] max-w-[400px] mx-auto leading-[1.618]">
               Join hundreds of libraries already saving time and delighting patrons.
             </p>
-            <div className="mt-[34px] flex justify-center gap-[13px]">
-              <button className="px-[34px] py-[13px] text-[13px] tracking-[0.15em] uppercase text-[#2a2419] bg-[#f7f5f0] rounded-full hover:bg-white active:scale-95 transition-all font-medium">
-                Start Free Trial
+            <div className="mt-[34px] flex flex-col sm:flex-row justify-center gap-[13px]">
+              <button className="relative px-[34px] py-[13px] text-[13px] tracking-[0.15em] uppercase text-[#2a2419] bg-[#f7f5f0] rounded-full overflow-hidden hover:shadow-[0_0_16px_rgba(58,109,148,0.25)] active:scale-95 transition-all duration-300 font-medium group/cta1">
+                <span className="absolute inset-0 rounded-full bg-black/0 group-hover/cta1:bg-black/[0.06] transition-all duration-300" />
+                <span className="relative z-10">Start Free Trial</span>
               </button>
-              <button className="px-[34px] py-[13px] text-[13px] tracking-[0.15em] uppercase text-[#c4b89a] border border-[#5c5240] rounded-full hover:border-[#c4b89a] active:scale-95 transition-all">
-                Book a Demo
+              <button className="relative px-[34px] py-[13px] text-[13px] tracking-[0.15em] uppercase text-[#c4b89a] border border-[#5c5240] rounded-full overflow-hidden hover:border-[#c4b89a] hover:bg-[#c4b89a] hover:text-[#2a2419] hover:shadow-[0_0_16px_rgba(58,109,148,0.25)] active:scale-95 transition-all duration-300 group/demo">
+                <span className="absolute inset-0 rounded-full bg-black/0 group-hover/demo:bg-black/10 transition-all duration-300" />
+                <span className="relative z-10">Book a Demo</span>
               </button>
             </div>
           </div>
@@ -751,11 +827,11 @@ export default function HomePage() {
 
       {/* ─── FOOTER ─── */}
       <footer className="relative z-10 border-t border-[#e0d9c8]">
-        <div className="max-w-5xl mx-auto px-6 py-[55px] flex gap-[55px]">
-          <div className="space-y-[13px] max-w-[180px]">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-[34px] md:py-[55px] flex flex-wrap gap-[34px] md:gap-[55px]">
+          <div className="space-y-[13px] w-full md:w-auto md:max-w-[180px]">
             <div className="flex items-center gap-[8px]">
               <div className="w-[21px] h-[21px] rounded-sm border border-[#c4b89a]" />
-              <span className="text-[13px] tracking-[0.15em] uppercase text-[#5c5240] font-medium">LibraryOS</span>
+              <span className="text-[13px] tracking-[0.15em] uppercase text-[#5c5240] font-medium">Libr.OS</span>
             </div>
             <p className="text-[13px] text-[#a09279] leading-[1.618]">Modern library management for modern librarians.</p>
           </div>
@@ -777,8 +853,8 @@ export default function HomePage() {
             </div>
           ))}
         </div>
-        <div className="max-w-5xl mx-auto px-6 py-[21px] border-t border-[#e0d9c8] flex justify-between items-center">
-          <p className="text-[11px] text-[#a09279]">&copy; 2026 LibraryOS. All rights reserved.</p>
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-[21px] border-t border-[#e0d9c8] flex flex-col sm:flex-row justify-between items-center gap-[13px]">
+          <p className="text-[11px] text-[#a09279]">&copy; 2026 Libr.OS. All rights reserved.</p>
           <div className="flex gap-[13px]">
             {["Twitter", "LinkedIn", "GitHub", "YouTube"].map((s) => (
               <div key={s} className="w-[21px] h-[21px] rounded bg-[#ede8dc] hover:bg-[#e0d9c8] transition-colors cursor-pointer" />
