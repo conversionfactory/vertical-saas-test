@@ -85,6 +85,19 @@ export default function HomePage() {
         .anim-book { animation: bookReveal 0.5s ease-out both; }
         .anim-search { animation: searchType 3s ease-in-out infinite; }
         .anim-cursor { animation: cursorBlink 0.8s step-end infinite; }
+        @keyframes orbit {
+          0%   { transform: rotate(0deg) translateX(calc(var(--orbit-r))) rotate(0deg); }
+          100% { transform: rotate(360deg) translateX(calc(var(--orbit-r))) rotate(-360deg); }
+        }
+        @keyframes orbitBlip {
+          0% { box-shadow: 0 0 0 0 var(--blip-color); }
+          70% { box-shadow: 0 0 0 6px transparent; }
+          100% { box-shadow: 0 0 0 0 transparent; }
+        }
+        @keyframes marquee {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
         .anim-sweep {
           background: linear-gradient(90deg, transparent 0%, rgba(74,140,199,0.06) 50%, transparent 100%);
           background-size: 200% 100%;
@@ -136,7 +149,7 @@ export default function HomePage() {
       </nav>
 
       {/* ─── HERO ─── */}
-      <section className="relative overflow-hidden z-10">
+      <section className="relative z-10">
         {/* Golden rectangle + spiral */}
         <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
           <svg viewBox="0 0 1000 618" className="w-full max-w-5xl opacity-[0.06]" fill="none" stroke="#8a7e6b" strokeWidth="1">
@@ -211,6 +224,9 @@ export default function HomePage() {
             {/* Right — product mock */}
             <div>
               <div className="relative max-w-[380px] mx-auto">
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[440px] h-[440px] rounded-full border border-[#b3cde0]">
+                  <div className="absolute left-1/2 top-1/2 w-[6px] h-[6px] rounded-full bg-[#b3cde0] -ml-[3px] -mt-[3px]" style={{ animation: "orbit 12s linear infinite, orbitBlip 2s ease-out infinite", ["--orbit-r" as string]: "220px", ["--blip-color" as string]: "rgba(179,205,224,0.5)" }} />
+                </div>
                 <div className="absolute inset-x-3 top-[5px] bottom-0 bg-[#ede8dc] rounded-2xl border border-[#e0d9c8]" />
                 <div className="absolute inset-x-1.5 top-[3px] bottom-0 bg-[#f0ebe0] rounded-2xl border border-[#e0d9c8]" />
                 <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl border border-[#e0d9c8] shadow-[0_8px_60px_rgba(90,80,60,0.06)] overflow-hidden">
@@ -279,20 +295,26 @@ export default function HomePage() {
           <p className="text-[11px] uppercase tracking-[0.4em] text-[#a09279] mb-[21px]">
             Trusted by libraries everywhere
           </p>
-          <div className="flex justify-center gap-[55px]">
-            {["Springfield PL", "Greenfield District", "Oakridge University", "Maplewood System", "Lakeview County"].map((name) => (
-              <div key={name} className="flex items-center gap-[8px]">
-                <div className="w-[21px] h-[21px] rounded bg-[#e0d9c8]" />
-                <span className="text-[13px] text-[#c4b89a] tracking-wide">{name}</span>
-              </div>
-            ))}
+          <div className="relative overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)", WebkitMaskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)" }}>
+            <div className="flex w-max" style={{ animation: "marquee 25s linear infinite" }}>
+              {[...Array(2)].map((_, setIndex) => (
+                <div key={setIndex} className="flex shrink-0">
+                  {["Springfield PL", "Greenfield District", "Oakridge University", "Maplewood System", "Lakeview County", "Brookhaven Library", "Riverside Public", "Cedar Falls District"].map((name) => (
+                    <div key={`${setIndex}-${name}`} className="flex items-center gap-[8px] mx-[34px]">
+                      <div className="w-[21px] h-[21px] rounded bg-[#e0d9c8]" />
+                      <span className="text-[13px] text-[#c4b89a] tracking-wide whitespace-nowrap">{name}</span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* ─── FEATURES OVERVIEW ─── */}
       <section className="relative z-10">
-        <div className="max-w-5xl mx-auto px-6 py-[89px]">
+        <div className="max-w-5xl mx-auto py-[89px]">
           <div className="text-center mb-[55px]">
             <h2 className="text-[29px] text-[#3d3626]" style={{ fontFamily: serif }}>
               Everything your library needs
@@ -301,14 +323,14 @@ export default function HomePage() {
               A complete toolkit designed specifically for modern librarians.
             </p>
           </div>
-          <div className="grid grid-cols-4 gap-[21px]">
+          <div className="grid grid-cols-4 justify-items-center">
             {[
               { title: "Patron Management", desc: "Track visitors, memberships, and check-ins with ease.", accent: "#4a8cc7" },
               { title: "Book Catalog", desc: "Search, organize, and manage your full inventory.", accent: "#8a8f6a" },
               { title: "Late Fees & Billing", desc: "Automate fee calculation and simplify payments.", accent: "#c2ad6e" },
               { title: "Media Rentals", desc: "Handle DVDs, Blu-rays, and digital media lending.", accent: "#4a8cc7" },
             ].map((f) => (
-              <div key={f.title} className="p-[34px] bg-white/80 backdrop-blur-sm rounded-xl border border-[#e0d9c8] shadow-[0_2px_8px_rgba(90,80,60,0.04)] hover:-translate-y-[3px] hover:shadow-[0_8px_40px_rgba(90,80,60,0.08)] transition-all duration-300">
+              <div key={f.title} className="w-[calc(100%-24px)] p-[34px] bg-white/80 backdrop-blur-sm rounded-xl border border-[#e0d9c8] shadow-[0_2px_8px_rgba(90,80,60,0.04)] hover:-translate-y-[3px] hover:shadow-[0_8px_40px_rgba(90,80,60,0.08)] transition-all duration-300">
                 <div className="w-[34px] h-[34px] rounded-lg bg-[#ede8dc] border border-[#e0d9c8] flex items-center justify-center mb-[21px]">
                   <div className="w-[8px] h-[8px] rounded-full" style={{ backgroundColor: f.accent }} />
                 </div>
@@ -345,7 +367,9 @@ export default function HomePage() {
           </div>
           <div>
             <div className="relative max-w-[380px] mx-auto">
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#b3cde0]" />
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#b3cde0]">
+                <div className="absolute left-1/2 top-1/2 w-[6px] h-[6px] rounded-full bg-[#b3cde0] -ml-[3px] -mt-[3px]" style={{ animation: "orbit 10s linear infinite, orbitBlip 2s ease-out infinite", ["--orbit-r" as string]: "150px", ["--blip-color" as string]: "rgba(179,205,224,0.5)" }} />
+              </div>
               <div className="absolute inset-x-2 top-[3px] bottom-0 bg-[#ede8dc] rounded-xl border border-[#e0d9c8]" />
               <div className="relative bg-white/80 backdrop-blur-sm rounded-xl border border-[#e0d9c8] shadow-[0_4px_24px_rgba(90,80,60,0.06)] overflow-hidden" style={{ aspectRatio: "1.618 / 1" }}>
                 {/* Patron check-in header */}
@@ -389,7 +413,9 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto px-6 py-[89px] grid grid-cols-[1fr_1fr] gap-[55px] items-center">
           <div>
             <div className="relative max-w-[380px] mx-auto">
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#c2c5b2]" />
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#c2c5b2]">
+                <div className="absolute left-1/2 top-1/2 w-[6px] h-[6px] rounded-full bg-[#c2c5b2] -ml-[3px] -mt-[3px]" style={{ animation: "orbit 10s linear infinite, orbitBlip 2s ease-out infinite", ["--orbit-r" as string]: "150px", ["--blip-color" as string]: "rgba(194,197,178,0.5)" }} />
+              </div>
               <div className="absolute inset-x-2 top-[3px] bottom-0 bg-[#ede8dc] rounded-xl border border-[#e0d9c8]" />
               <div className="relative bg-white/80 backdrop-blur-sm rounded-xl border border-[#e0d9c8] shadow-[0_4px_24px_rgba(90,80,60,0.06)] overflow-hidden" style={{ aspectRatio: "1.618 / 1" }}>
                 {/* Search bar with typing animation */}
@@ -477,7 +503,9 @@ export default function HomePage() {
           </div>
           <div>
             <div className="relative max-w-[380px] mx-auto">
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#e6dbb0]" />
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#e6dbb0]">
+                <div className="absolute left-1/2 top-1/2 w-[6px] h-[6px] rounded-full bg-[#e6dbb0] -ml-[3px] -mt-[3px]" style={{ animation: "orbit 10s linear infinite, orbitBlip 2s ease-out infinite", ["--orbit-r" as string]: "150px", ["--blip-color" as string]: "rgba(230,219,176,0.5)" }} />
+              </div>
               <div className="absolute inset-x-2 top-[3px] bottom-0 bg-[#ede8dc] rounded-xl border border-[#e0d9c8]" />
               <div className="relative bg-white/80 backdrop-blur-sm rounded-xl border border-[#e0d9c8] shadow-[0_4px_24px_rgba(90,80,60,0.06)] overflow-hidden" style={{ aspectRatio: "1.618 / 1" }}>
                 {/* Billing header */}
@@ -525,7 +553,9 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto px-6 py-[89px] grid grid-cols-[1fr_1fr] gap-[55px] items-center">
           <div>
             <div className="relative max-w-[380px] mx-auto">
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#b3cde0]" />
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-[#b3cde0]">
+                <div className="absolute left-1/2 top-1/2 w-[6px] h-[6px] rounded-full bg-[#b3cde0] -ml-[3px] -mt-[3px]" style={{ animation: "orbit 10s linear infinite, orbitBlip 2s ease-out infinite", ["--orbit-r" as string]: "150px", ["--blip-color" as string]: "rgba(179,205,224,0.5)" }} />
+              </div>
               <div className="absolute inset-x-2 top-[3px] bottom-0 bg-[#ede8dc] rounded-xl border border-[#e0d9c8]" />
               <div className="relative bg-white/80 backdrop-blur-sm rounded-xl border border-[#e0d9c8] shadow-[0_4px_24px_rgba(90,80,60,0.06)] overflow-hidden" style={{ aspectRatio: "1.618 / 1" }}>
                 {/* Media header */}
@@ -635,7 +665,7 @@ export default function HomePage() {
               Plans that scale with your library system.
             </p>
           </div>
-          <div className="grid grid-cols-3 gap-[21px]">
+          <div className="max-w-[610px] mx-auto grid grid-cols-3 gap-[13px]">
             {[
               { tier: "Small Library", price: "$29", period: "/mo", cta: "Get Started", featured: false, features: ["Up to 500 patrons", "1 branch", "Email support", "Core features"] },
               { tier: "District", price: "$99", period: "/mo", cta: "Get Started", featured: true, features: ["Unlimited patrons", "Up to 10 branches", "Priority support", "Advanced analytics"] },
@@ -643,39 +673,39 @@ export default function HomePage() {
             ].map((p) => (
               <div
                 key={p.tier}
-                className={`p-[34px] rounded-xl transition-all duration-300 hover:-translate-y-[3px] ${
+                className={`p-[21px] rounded-xl transition-all duration-300 hover:-translate-y-[3px] ${
                   p.featured
-                    ? "bg-white/90 backdrop-blur-sm border-2 border-[#5c5240] shadow-[0_8px_60px_rgba(90,80,60,0.08)] hover:shadow-[0_16px_80px_rgba(90,80,60,0.12)]"
+                    ? "bg-white/90 backdrop-blur-sm border border-[#5c5240] shadow-[0_4px_34px_rgba(90,80,60,0.08)] hover:shadow-[0_8px_40px_rgba(90,80,60,0.12)]"
                     : "bg-white/50 border border-[#e0d9c8] shadow-[0_2px_8px_rgba(90,80,60,0.04)] hover:shadow-[0_8px_40px_rgba(90,80,60,0.08)]"
                 }`}
               >
                 {p.featured && (
-                  <span className="inline-block px-[13px] py-[3px] text-[8px] uppercase tracking-[0.3em] rounded-full bg-[#cdd0bc] text-[#444830] font-medium mb-[13px]">
+                  <span className="inline-block px-[8px] py-[2px] text-[7px] uppercase tracking-[0.3em] rounded-full bg-[#cdd0bc] text-[#444830] font-medium mb-[8px]">
                     Most Popular
                   </span>
                 )}
                 <p className="text-[11px] uppercase tracking-[0.3em] text-[#a09279]">{p.tier}</p>
-                <div className="mt-[8px] flex items-end gap-[3px]">
-                  <span className="text-[47px] font-bold text-[#3d3626] leading-none" style={{ fontFamily: serif }}>{p.price}</span>
-                  {p.period && <span className="text-[14px] text-[#a09279] mb-[8px]">{p.period}</span>}
+                <div className="mt-[5px] flex items-end gap-[3px]">
+                  <span className="text-[29px] font-bold text-[#3d3626] leading-none" style={{ fontFamily: serif }}>{p.price}</span>
+                  {p.period && <span className="text-[13px] text-[#a09279] mb-[3px]">{p.period}</span>}
                 </div>
-                <ul className="mt-[21px] space-y-[13px]">
+                <ul className="mt-[13px] space-y-[8px]">
                   {p.features.map((f) => (
-                    <li key={f} className="flex items-center gap-[13px] text-[13px] text-[#5c5240]">
-                      <div className="w-[5px] h-[5px] rounded-full bg-[#a6ab8e]" />
+                    <li key={f} className="flex items-center gap-[8px] text-[13px] text-[#5c5240]">
+                      <div className="w-[4px] h-[4px] rounded-full bg-[#a6ab8e] shrink-0" />
                       {f}
                     </li>
                   ))}
                 </ul>
                 {p.featured ? (
-                  <div className="mt-[34px] rounded-full border border-[#b3cde0] p-[3px]">
-                    <button className="relative w-full py-[13px] rounded-full text-[13px] tracking-[0.15em] uppercase text-white font-medium active:scale-[0.97] transition-all overflow-hidden"
-                      style={{ background: "linear-gradient(to bottom, #3a6d94, #2a5070)", boxShadow: "0 1px 0 0 rgba(255,255,255,0.12) inset, 0 -1px 0 0 rgba(0,0,0,0.2) inset, 0 4px 12px rgba(42,80,112,0.35), 0 1px 3px rgba(0,0,0,0.15)" }}>
+                  <div className="mt-[21px] rounded-full border border-[#b3cde0] p-[2px]">
+                    <button className="relative w-full py-[8px] rounded-full text-[11px] tracking-[0.15em] uppercase text-white font-medium active:scale-[0.97] transition-all overflow-hidden"
+                      style={{ background: "linear-gradient(to bottom, #3a6d94, #2a5070)", boxShadow: "0 1px 0 0 rgba(255,255,255,0.12) inset, 0 -1px 0 0 rgba(0,0,0,0.2) inset, 0 3px 8px rgba(42,80,112,0.3), 0 1px 2px rgba(0,0,0,0.12)" }}>
                       <span className="relative z-10">{p.cta}</span>
                     </button>
                   </div>
                 ) : (
-                  <button className="mt-[34px] w-full py-[13px] rounded-full text-[13px] tracking-[0.15em] uppercase border border-[#c4b89a] text-[#5c5240] hover:border-[#5c5240] hover:bg-[#5c5240]/5 transition-all active:scale-95">
+                  <button className="mt-[21px] w-full py-[8px] rounded-full text-[11px] tracking-[0.15em] uppercase border border-[#c4b89a] text-[#5c5240] hover:border-[#5c5240] hover:bg-[#5c5240]/5 transition-all active:scale-95">
                     {p.cta}
                   </button>
                 )}
