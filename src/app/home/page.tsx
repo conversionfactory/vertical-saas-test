@@ -339,14 +339,68 @@ export default function HomePage() {
                         </div>
                       ))}
                     </div>
-                    {/* Library image */}
-                    <div className="rounded-lg border border-[#e8e2d4] overflow-hidden relative" style={{ aspectRatio: "1.618 / 1" }}>
-                      <img
-                        src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=600&q=80&auto=format&fit=crop"
-                        alt="Public library interior"
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#f7f5f0]/30 to-transparent" />
+                    {/* Library sketch illustration */}
+                    <div className="rounded-lg border border-[#e8e2d4] overflow-hidden relative bg-[#f7f5f0]" style={{ aspectRatio: "1.618 / 1" }}>
+                      <svg viewBox="0 0 320 198" fill="none" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                          <filter id="sketch">
+                            <feTurbulence baseFrequency="0.03" numOctaves="4" seed="2" result="n"/>
+                            <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5" xChannelSelector="R" yChannelSelector="G"/>
+                          </filter>
+                        </defs>
+                        {/* Floor line */}
+                        <path d="M0 165 Q80 162 160 165 Q240 168 320 165" stroke="#c4b89a" strokeWidth="1" filter="url(#sketch)"/>
+                        {/* Left bookshelf */}
+                        <rect x="20" y="40" width="60" height="125" rx="2" stroke="#b3a88e" strokeWidth="1.2" filter="url(#sketch)"/>
+                        <line x1="20" y1="70" x2="80" y2="70" stroke="#c4b89a" strokeWidth="0.8" filter="url(#sketch)"/>
+                        <line x1="20" y1="100" x2="80" y2="100" stroke="#c4b89a" strokeWidth="0.8" filter="url(#sketch)"/>
+                        <line x1="20" y1="130" x2="80" y2="130" stroke="#c4b89a" strokeWidth="0.8" filter="url(#sketch)"/>
+                        {/* Books on left shelf */}
+                        <rect x="25" y="44" width="6" height="24" rx="1" fill="#9bb0c4" opacity="0.4" filter="url(#sketch)"/>
+                        <rect x="33" y="46" width="5" height="22" rx="1" fill="#a6ab8e" opacity="0.4" filter="url(#sketch)"/>
+                        <rect x="40" y="43" width="7" height="25" rx="1" fill="#c2ad6e" opacity="0.35" filter="url(#sketch)"/>
+                        <rect x="49" y="45" width="5" height="23" rx="1" fill="#9bb0c4" opacity="0.3" filter="url(#sketch)"/>
+                        <rect x="56" y="44" width="6" height="24" rx="1" fill="#b3a88e" opacity="0.4" filter="url(#sketch)"/>
+                        <rect x="64" y="47" width="5" height="21" rx="1" fill="#a6ab8e" opacity="0.35" filter="url(#sketch)"/>
+                        <rect x="25" y="74" width="7" height="24" rx="1" fill="#c2ad6e" opacity="0.3" filter="url(#sketch)"/>
+                        <rect x="34" y="73" width="5" height="25" rx="1" fill="#9bb0c4" opacity="0.4" filter="url(#sketch)"/>
+                        <rect x="41" y="75" width="6" height="23" rx="1" fill="#b3a88e" opacity="0.35" filter="url(#sketch)"/>
+                        <rect x="49" y="73" width="8" height="25" rx="1" fill="#a6ab8e" opacity="0.4" filter="url(#sketch)"/>
+                        <rect x="59" y="74" width="5" height="24" rx="1" fill="#c2ad6e" opacity="0.35" filter="url(#sketch)"/>
+                        {/* Right bookshelf */}
+                        <rect x="240" y="40" width="60" height="125" rx="2" stroke="#b3a88e" strokeWidth="1.2" filter="url(#sketch)"/>
+                        <line x1="240" y1="70" x2="300" y2="70" stroke="#c4b89a" strokeWidth="0.8" filter="url(#sketch)"/>
+                        <line x1="240" y1="100" x2="300" y2="100" stroke="#c4b89a" strokeWidth="0.8" filter="url(#sketch)"/>
+                        <line x1="240" y1="130" x2="300" y2="130" stroke="#c4b89a" strokeWidth="0.8" filter="url(#sketch)"/>
+                        {/* Books on right shelf */}
+                        <rect x="245" y="44" width="5" height="24" rx="1" fill="#a6ab8e" opacity="0.4" filter="url(#sketch)"/>
+                        <rect x="252" y="46" width="7" height="22" rx="1" fill="#9bb0c4" opacity="0.35" filter="url(#sketch)"/>
+                        <rect x="261" y="43" width="5" height="25" rx="1" fill="#c2ad6e" opacity="0.4" filter="url(#sketch)"/>
+                        <rect x="268" y="45" width="6" height="23" rx="1" fill="#b3a88e" opacity="0.3" filter="url(#sketch)"/>
+                        <rect x="276" y="44" width="7" height="24" rx="1" fill="#a6ab8e" opacity="0.4" filter="url(#sketch)"/>
+                        <rect x="285" y="46" width="5" height="22" rx="1" fill="#9bb0c4" opacity="0.35" filter="url(#sketch)"/>
+                        <rect x="245" y="74" width="6" height="24" rx="1" fill="#c2ad6e" opacity="0.35" filter="url(#sketch)"/>
+                        <rect x="253" y="73" width="7" height="25" rx="1" fill="#b3a88e" opacity="0.4" filter="url(#sketch)"/>
+                        <rect x="262" y="75" width="5" height="23" rx="1" fill="#9bb0c4" opacity="0.35" filter="url(#sketch)"/>
+                        <rect x="269" y="73" width="6" height="25" rx="1" fill="#a6ab8e" opacity="0.4" filter="url(#sketch)"/>
+                        {/* Center arch / doorway */}
+                        <path d="M120 165 L120 60 Q160 25 200 60 L200 165" stroke="#b3a88e" strokeWidth="1.2" fill="none" filter="url(#sketch)"/>
+                        {/* Reading table */}
+                        <ellipse cx="160" cy="140" rx="30" ry="8" stroke="#c4b89a" strokeWidth="1" fill="#ede8dc" opacity="0.5" filter="url(#sketch)"/>
+                        <line x1="140" y1="140" x2="138" y2="163" stroke="#c4b89a" strokeWidth="0.8" filter="url(#sketch)"/>
+                        <line x1="180" y1="140" x2="182" y2="163" stroke="#c4b89a" strokeWidth="0.8" filter="url(#sketch)"/>
+                        {/* Open book on table */}
+                        <path d="M150 136 Q155 133 160 136 Q165 133 170 136" stroke="#a6ab8e" strokeWidth="0.8" fill="none" filter="url(#sketch)"/>
+                        {/* Hanging lamp */}
+                        <line x1="160" y1="0" x2="160" y2="30" stroke="#c4b89a" strokeWidth="0.6" filter="url(#sketch)"/>
+                        <path d="M148 30 Q160 38 172 30" stroke="#c2ad6e" strokeWidth="0.8" fill="none" filter="url(#sketch)"/>
+                        <ellipse cx="160" cy="42" rx="6" ry="2" fill="#c2ad6e" opacity="0.15"/>
+                        {/* Small window in arch */}
+                        <circle cx="160" cy="48" r="8" stroke="#9bb0c4" strokeWidth="0.8" fill="#9bb0c4" opacity="0.08" filter="url(#sketch)"/>
+                        <line x1="160" y1="40" x2="160" y2="56" stroke="#9bb0c4" strokeWidth="0.5" filter="url(#sketch)"/>
+                        <line x1="152" y1="48" x2="168" y2="48" stroke="#9bb0c4" strokeWidth="0.5" filter="url(#sketch)"/>
+                      </svg>
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#f7f5f0]/40 to-transparent" />
                     </div>
                   </div>
                 </div>
@@ -392,19 +446,23 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[13px] sm:gap-0 justify-items-center">
             {[
-              { title: "Patron Management", desc: "Track visitors, memberships, and check-ins with ease.", accent: "#4a8cc7" },
-              { title: "Book Catalog", desc: "Search, organize, and manage your full inventory.", accent: "#8a8f6a" },
-              { title: "Late Fees & Billing", desc: "Automate fee calculation and simplify payments.", accent: "#c2ad6e" },
-              { title: "Media Rentals", desc: "Handle DVDs, Blu-rays, and digital media lending.", accent: "#4a8cc7" },
+              { title: "Patron Management", desc: "Track visitors, memberships, and check-ins with ease.", accent: "#4a8cc7", anchor: "patron-management" },
+              { title: "Book Catalog", desc: "Search, organize, and manage your full inventory.", accent: "#8a8f6a", anchor: "book-catalog" },
+              { title: "Late Fees & Billing", desc: "Automate fee calculation and simplify payments.", accent: "#c2ad6e", anchor: "late-fees" },
+              { title: "Media Rentals", desc: "Handle DVDs, Blu-rays, and digital media lending.", accent: "#4a8cc7", anchor: "media-rentals" },
             ].map((f) => {
               const Icon = featureIcons[f.title];
               return (
-              <div key={f.title} className="w-[calc(100%-24px)] p-[34px] bg-white/80 backdrop-blur-sm rounded-xl border border-[#e0d9c8] shadow-[0_2px_8px_rgba(90,80,60,0.04)] hover:-translate-y-[3px] hover:shadow-[0_8px_40px_rgba(90,80,60,0.08)] transition-all duration-300">
+              <div key={f.title} className="w-[calc(100%-24px)] p-[34px] bg-white/80 backdrop-blur-sm rounded-xl border border-[#e0d9c8] shadow-[0_2px_8px_rgba(90,80,60,0.04)] hover:-translate-y-[3px] hover:shadow-[0_8px_40px_rgba(90,80,60,0.08)] transition-all duration-300 flex flex-col">
                 <div className="w-[42px] h-[42px] rounded-lg bg-[#ede8dc] border border-[#e0d9c8] flex items-center justify-center mb-[21px]">
                   {Icon ? <Icon size={24} color={f.accent} /> : <div className="w-[8px] h-[8px] rounded-full" style={{ backgroundColor: f.accent }} />}
                 </div>
                 <h3 className="text-[14px] font-medium text-[#3d3626] mb-[8px]">{f.title}</h3>
                 <p className="text-[13px] text-[#8a7e6b] leading-[1.618]">{f.desc}</p>
+                <a href={`#${f.anchor}`} className="inline-flex items-center gap-[5px] mt-auto pt-[13px] text-[12px] tracking-[0.05em] text-[#8a7e6b] hover:text-[#3d3626] transition-colors duration-200">
+                  Learn more
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 2.5L8 6L4.5 9.5"/></svg>
+                </a>
               </div>
               );
             })}
@@ -413,7 +471,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── FEATURE DETAIL 1 — Patron Management ─── */}
-      <section className="relative z-10 border-y border-[#8a7e6b]/[0.07]">
+      <section id="patron-management" className="relative z-10 border-y border-[#8a7e6b]/[0.07] scroll-mt-[55px]">
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-[55px] md:py-[89px] grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-[34px] md:gap-[55px] items-center">
           <div>
             <div className="flex items-center gap-[8px] mb-[13px]">
@@ -479,7 +537,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── FEATURE DETAIL 2 — Book Catalog (reversed) ─── */}
-      <section className="relative z-10">
+      <section id="book-catalog" className="relative z-10 scroll-mt-[55px]">
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-[55px] md:py-[89px] grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-[34px] md:gap-[55px] items-center">
           <div className="order-2 md:order-1">
             <div className="relative max-w-[320px] md:max-w-[380px] mx-auto">
@@ -549,7 +607,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── FEATURE DETAIL 3 — Late Fees & Billing ─── */}
-      <section className="relative z-10 border-y border-[#8a7e6b]/[0.07]">
+      <section id="late-fees" className="relative z-10 border-y border-[#8a7e6b]/[0.07] scroll-mt-[55px]">
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-[55px] md:py-[89px] grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-[34px] md:gap-[55px] items-center">
           <div>
             <div className="flex items-center gap-[8px] mb-[13px]">
@@ -619,7 +677,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── FEATURE DETAIL 4 — Media Rentals (reversed) ─── */}
-      <section className="relative z-10">
+      <section id="media-rentals" className="relative z-10 scroll-mt-[55px]">
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-[55px] md:py-[89px] grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-[34px] md:gap-[55px] items-center">
           <div className="order-2 md:order-1">
             <div className="relative max-w-[320px] md:max-w-[380px] mx-auto">
@@ -749,14 +807,14 @@ export default function HomePage() {
                     : "bg-white/50 border border-[#e0d9c8] shadow-[0_2px_8px_rgba(90,80,60,0.04)] hover:shadow-[0_8px_40px_rgba(90,80,60,0.08)]"
                 }`}
               >
-                <div className="h-[22px] mb-[8px]">
+                <div className="flex items-center gap-[8px]">
+                  <p className="text-[11px] uppercase tracking-[0.3em] text-[#a09279]">{p.tier}</p>
                   {p.featured && (
                     <span className="inline-block px-[8px] py-[2px] text-[7px] uppercase tracking-[0.3em] rounded-full bg-[#cdd0bc] text-[#444830] font-medium">
                       Most Popular
                     </span>
                   )}
                 </div>
-                <p className="text-[11px] uppercase tracking-[0.3em] text-[#a09279]">{p.tier}</p>
                 <div className="mt-[5px] flex items-end gap-[3px]">
                   <span className="text-[29px] font-bold text-[#3d3626] leading-none" style={{ fontFamily: serif }}>{p.price}</span>
                   {p.period && <span className="text-[13px] text-[#a09279] mb-[3px]">{p.period}</span>}
@@ -789,6 +847,39 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ─── MANIFESTO ─── */}
+      <section className="relative z-10 border-y border-[#8a7e6b]/[0.07]">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-[55px] md:py-[89px]">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-[8px] mb-[21px]">
+              <div className="w-[21px] h-[21px] rounded-sm border border-[#c4b89a]" />
+              <span className="text-[11px] uppercase tracking-[0.3em] text-[#a09279]">Our Story</span>
+            </div>
+            <h2 className="text-[24px] md:text-[29px] text-[#3d3626] leading-[1.3]" style={{ fontFamily: serif }}>
+              Built by librarians,<br />
+              <span className="italic font-light text-[#8a7e6b]">for librarians.</span>
+            </h2>
+            <div className="mt-[34px] space-y-[21px] text-[15px] text-[#7a6f5e] leading-[1.8] text-left md:text-center">
+              <p>
+                Libr.OS started in a small public library in Vermont. Our founder spent twelve years behind the circulation desk, watching brilliant colleagues wrestle with software that was clearly built by people who had never set foot in a library.
+              </p>
+              <p>
+                Systems designed for warehouses, repainted for libraries. Patron records buried under six clicks. Fee calculations done on sticky notes because the &ldquo;automated&rdquo; system couldn&apos;t handle holiday closures.
+              </p>
+              <p>
+                We believed library software should feel like a library — <span className="text-[#5c5240] font-medium">warm, intuitive, and quietly competent</span>. Not another enterprise tool that treats books like inventory and patrons like account numbers.
+              </p>
+              <p>
+                Every feature in Libr.OS was shaped by real librarians solving real problems. No focus groups. No feature bloat. Just thousands of conversations with the people who do this work every day.
+              </p>
+            </div>
+            <div className="mt-[34px]">
+              <Ornament />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ─── FINAL CTA ─── */}
       <section className="relative z-10 bg-[#2a2419]">
         <div className="max-w-5xl mx-auto px-4 md:px-6 py-[55px] md:py-[89px] text-center relative">
@@ -805,12 +896,31 @@ export default function HomePage() {
 
           <div className="relative z-10">
             <Ornament />
-            <h2 className="text-[29px] text-[#f7f5f0] mt-[34px]" style={{ fontFamily: serif }}>
-              Ready to modernize your library?
+            <h2 className="text-[24px] md:text-[29px] text-[#f7f5f0] mt-[34px]" style={{ fontFamily: serif }}>
+              Your patrons deserve better.<br />
+              <span className="italic font-light text-[#c4b89a]">So does your staff.</span>
             </h2>
-            <p className="mt-[13px] text-[14px] text-[#8a7e6b] max-w-[400px] mx-auto leading-[1.618]">
-              Join hundreds of libraries already saving time and delighting patrons.
+            <p className="mt-[13px] text-[14px] text-[#8a7e6b] max-w-[420px] mx-auto leading-[1.618]">
+              We know switching systems feels like a big decision. Here&apos;s what we hear most — and why it&apos;s easier than you think.
             </p>
+
+            {/* Objection-handling bullets */}
+            <div className="mt-[34px] max-w-[520px] mx-auto space-y-[13px] text-left">
+              {[
+                { objection: "Our staff won\u2019t learn a new system.", answer: "If they can use a card catalog, they can use Libr.OS. Most teams are fully onboarded in a single afternoon." },
+                { objection: "Migrating our data sounds like a nightmare.", answer: "We handle the entire migration for you — patron records, catalog, fee history — at no extra cost. Zero downtime." },
+                { objection: "We can\u2019t justify the budget right now.", answer: "Start free for 14 days, no credit card. Libraries that switch save an average of 12 staff-hours per week." },
+              ].map((item) => (
+                <div key={item.objection} className="flex gap-[13px] p-[13px] rounded-lg bg-white/[0.04] border border-white/[0.06]">
+                  <div className="w-[5px] h-[5px] rounded-full bg-[#a6ab8e] shrink-0 mt-[7px]" />
+                  <div>
+                    <p className="text-[13px] text-[#f7f5f0] font-medium leading-[1.4]">&ldquo;{item.objection}&rdquo;</p>
+                    <p className="text-[13px] text-[#8a7e6b] leading-[1.618] mt-[5px]">{item.answer}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
             <div className="mt-[34px] flex flex-col sm:flex-row justify-center gap-[13px]">
               <button className="relative px-[34px] py-[13px] text-[13px] tracking-[0.15em] uppercase text-[#2a2419] bg-[#f7f5f0] rounded-full overflow-hidden hover:shadow-[0_0_16px_rgba(58,109,148,0.25)] active:scale-95 transition-all duration-300 font-medium group/cta1">
                 <span className="absolute inset-0 rounded-full bg-black/0 group-hover/cta1:bg-black/[0.06] transition-all duration-300" />
@@ -821,6 +931,7 @@ export default function HomePage() {
                 <span className="relative z-10">Book a Demo</span>
               </button>
             </div>
+            <p className="mt-[13px] text-[11px] text-[#5c5240] tracking-wide">No credit card required · Free migration · Cancel anytime</p>
           </div>
         </div>
       </section>
